@@ -18,7 +18,7 @@ class LMCDPRequestHandler(BaseHTTPRequestHandler):
         <title>Calculador de Área de Triángulos </title>
     </head>
     <body>
-        <h1>Calculador de Área de Triángulos Pepe</h1>
+        <h1>Calculador de Área de Triángulos LO</h1>
 
         <form action="/calcular_area" method="POST"> <label for="base">Base:</label>
             <input type="number" id="base" name="base" required>
@@ -43,7 +43,7 @@ class LMCDPRequestHandler(BaseHTTPRequestHandler):
             <title>Calculador de Área de Triángulos</title>
         </head>
         <body>
-            <h1>Calculador de Área de Triángulos de LAOR</h1>
+            <h1>Calculador de Área de Triángulos de LO</h1>
         
             <h3>El área de un triángulo de base {base} y altura {altura} es: {resultado}</h3>
         </body>
@@ -89,7 +89,12 @@ class LMCDPRequestHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
         #self.wfile.write(bytes(genera_resultado(base, altura), 'utf-8'))
+        """
+        UTF-8 es un estándar de codificación de caracteres que se utiliza para representar texto en muchos idiomas diferentes.
+        Su nombre significa 8-bit Unicode Transformation Format (Formato de Transformación Unicode de 8 bits). 
+        Aquí tienes algunas razones por las cuales se utiliza UTF-8:
         self.wfile.write(bytes(self.genera_resultado(base, altura), 'utf-8'))
+        """
 
         """ Ejecuta el servidor HTTP. 
         Args: 
