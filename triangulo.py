@@ -9,18 +9,21 @@ class LMCDPRequestHandler(BaseHTTPRequestHandler):
     En este manejador sirve un formulario HTML simple para calcular el área de un triángulo. 
     Maneja solicitudes GET para servir el formulario y solicitudes POST para calcular y mostrar el resultado. """   
 
-    html_calc_triangulo = """    
+    """
+    Clase que maneja las solicitudes HTTP GET y POST para calcular el área de un triángulo.
+    """
+    html_calc_triangulo = """
     <!DOCTYPE html>
     <html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Calculador de Área de Triángulos </title>
+        <title>Calculador de Área de Triángulos</title>
     </head>
     <body>
-        <h1>Calculador de Área de Triángulos LO</h1>
-
-        <form action="/calcular_area" method="POST"> <label for="base">Base:</label>
+        <h1>Calculador de Área de Triángulos LO</h1> <!-- Personalizado con tus iniciales -->
+        <form action="/calcular_area" method="POST">
+            <label for="base">Base:</label>
             <input type="number" id="base" name="base" required>
 
             <label for="altura">Altura:</label>
@@ -29,26 +32,34 @@ class LMCDPRequestHandler(BaseHTTPRequestHandler):
             <button type="submit">Calcular</button>
         </form>
     </body>
-    </html>
-    """  
+    </html>"""
 
     def genera_resultado(self, base, altura):
-        resultado = (base * altura)/2
-        html_area= f"""
-        <!DOCTYPE html>
-        <html lang="es">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Calculador de Área de Triángulos</title>
-        </head>
-        <body>
-            <h1>Calculador de Área de Triángulos de LO</h1>
-        
-            <h3>El área de un triángulo de base {base} y altura {altura} es: {resultado}</h3>
-        </body>
-        </html>
         """
+        Genera una respuesta HTML con el resultado del cálculo del área de un triángulo.
+
+        Args:
+            base (float): La base del triángulo.
+            altura (float): La altura del triángulo.
+
+        Returns:
+            str: HTML con el resultado del área calculada.
+        """
+        resultado = (base * altura) / 2
+        html_area = f"""
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculador de Área de Triángulos</title>
+    </head>
+    <body>
+        <h1>Calculador de Área de Triángulos LO</h1> <!-- Personalizado con tus iniciales -->
+        <h3>El área de un triángulo de base {base} y altura {altura} es: {resultado}</h3>
+    </body>
+    </html>
+    """
         return html_area
     
     """ Se maneja las solicitudes GET 
@@ -56,16 +67,16 @@ class LMCDPRequestHandler(BaseHTTPRequestHandler):
 
 
     def do_GET(self):
-        print("------- Contenido del request SELF-------")
-        print(f"path = {self.path}")
-        for key, value in self.__dict__.items():
-            print (f"Atributo de instancia ='{key}' contiene {value}")
-        print("------- Final contenido -------")
+        """
+        Maneja las solicitudes GET enviando el formulario HTML al cliente.
+        """
+        # Responder a la solicitud GET con el formulario HTML
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        self.wfile.write(bytes(self.html_calc_triangulo, 'utf-8'))
+        self.wfile.write(bytes(self.html_calc_triangulo, 'utf-8')) # Uso de utf-8 para la codificación
 
+    
         """ Se maneja las solicitudes POST.
         En este método procesa el formulario enviado para calcular y mostrar el area de un triangulo """
 
@@ -88,7 +99,9 @@ class LMCDPRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        #self.wfile.write(bytes(genera_resultado(base, altura), 'utf-8'))
+        response_html = self.genera_resultado(base, altura)
+        self.wfile.write(bytes(response_html, 'utf-8')) # Uso de utf-8 para la codificación
+       
         """
         UTF-8 es un estándar de codificación de caracteres que se utiliza para representar texto en muchos idiomas diferentes.
         Su nombre significa 8-bit Unicode Transformation Format (Formato de Transformación Unicode de 8 bits). 
